@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Real Estate Search Demo</title>
+    <link type="text/css" href="../../external/jquery-ui-1.8.2.custom.css" media="screen"
+        rel="Stylesheet" />
+    <link type="text/css" href="../../themes/base/jquery.searchkit.css" media="screen"
+        rel="Stylesheet" />
+    <link type="text/css" href="../../themes/base/jquery.searchkit.estate.css" media="screen"
+        rel="Stylesheet" />
+</head>
+<body id="demo_page">
+    <div class="container">
+        <div id="header">
+            <div id="searchbox" class="ui-widget">
+            </div>
+        </div>
+        <div id="main">
+            <div class="left">
+                <div id="refinebox" class="ui-widget">
+                    <label for="location">
+                        Location:</label>
+                    <input type="text" id="location" />
+                    <label for="min_price">
+                        Price Range:</label>
+                    <input type="text" id="min_price" />
+                    <input type="text" id="max_price" />
+                    <div id="more_search">
+                        <a href="#">More Search</a>
+                        <label for="keyword">
+                            Keyword Search</label>
+                        <input type="text" id="keyword" />
+                        <input type="button" id="more_search_update" value="Update" />
+                    </div>
+                </div>
+            </div>
+            <div class="right_wrap">
+                <div id="terms" class="ui-widget">
+                </div>
+                <div id="tabs" class="ui-widget">
+                </div>
+                <div id="views" class="ui-widget">
+                    <a id="list_view" href="#"></a><a id="map_view" href="#"></a>
+                </div>
+                <div class="center">
+                    <div id="short_paging" class="ui-widget">
+                    </div>
+                    <div id="results" class="ui-widget">
+                    </div>
+                    <div id="long_paging" class="ui-widget">
+                    </div>
+                </div>
+                <div id="map" class="ui-widget">
+                    <input type="checkbox" id="search_within_map" />
+                </div>
+                <div class="right">
+                    <div id="extras" class="ui-widget">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+    <script type="text/javascript" src="../../external/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../../external/jquery-ui-1.8.2.custom.min.js"></script>
+    <script type="text/javascript" src="../../js/jquery.searchkit.js"></script>
+    <script type="text/javascript" src="../../js/jquery.searchkit.estate.js"></script>
+    <script type="text/javascript">
+        (function ($, window) {
+
+            var settings,
+                context;
+
+            // extends
+            $.searchkit.extend($.searchkit.ui.filter, {
+                map: {
+                    init: function (context) {
+                    }
+                }
+            });
+            $.searchkit.extend($.searchkit.ui.view, {
+                map: {
+                    init: function (context) {
+                    }
+                }
+            });
+
+            // settings
+            settings = {
+                widgets: [
+                // refine
+                    [$.searchkit.ui.core.priceRange, [{"#min_price": "minPrice"}, {"#max_price": "maxPrice"}]],
+                    [$.searchkit.ui.estate.location, { "#location": ["location", "q"] }],
+                    [$.searchkit.ui.estate.searchWithin, "#search_within"],
+                // map
+                    [$.searchkit.ui.estate.map, "#map"],
+                    [$.searchkit.ui.estate.map.searchWithin, "#search_within_map"],
+                // terms
+                    [$.searchkit.ui.core.term, "#terms"],
+                // sort
+                    [$.searchkit.ui.core.sort, "#sort_by", "sortBy"],
+                // paging
+                    [$.searchkit.ui.shortPaging, "#short_paging"],
+                    [$.searchkit.ui.longPaging, "#long_paging"]
+                ],
+                services: [
+                    [$.searchkit.ui.estate, ["location", "minPrice", "maxPrice", "sortBy", "start", "hits"], {url: "/services/getEstates", type: "POST"}],
+                    [$.searchkit.ui.estate.location, ["q"], {url: "/services/getLocations", type: "GET"}]
+                ]
+            };
+
+            // create context
+            context = $("#results").searchkit("estate", settings);
+
+            // public to access
+            window.Search = context;
+
+        })(jQuery, window);
+    </script>
+</body>
+</html>
