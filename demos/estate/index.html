@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Real Estate Search Demo</title>
@@ -69,7 +69,7 @@
     <script type="text/javascript">
         (function ($, window) {
 
-            var settings,
+            var options,
                 context;
 
             // extends
@@ -86,8 +86,8 @@
                 }
             });
 
-            // settings
-            settings = {
+            // options
+            options = {
                 widgets: [
                 // refine
                     [$.searchkit.ui.core.priceRange, [{"#min_price": "minPrice"}, {"#max_price": "maxPrice"}]],
@@ -111,7 +111,7 @@
             };
 
             // create context
-            context = $("#results").searchkit("estate", settings);
+            context = $("#results").searchkit("estate", options);
 
             // public to access
             window.Search = context;
